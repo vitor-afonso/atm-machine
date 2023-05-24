@@ -7,72 +7,51 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--------- Wellcome to VKM Bank -----------");
         verifyUser(scanner);
-
-        double checkingBallance = 0;
-        double savingsBallance = 0;
-
+        double checkingBalance = 0;
+        double savingsBalance = 0;
+        
         while (true) {
-            // back to select account until exit choice
+            // select account until exit choice
             byte userAccountChoice = selectAccount(scanner);
-
+            
             switch(userAccountChoice) {
                 case 1:
-                    System.out.println("----------- CHECKING ACCOUNT -------------");
-                    System.out.println("Type 1 - View balance");
-                    System.out.println("Type 2 - Withdraw");
-                    System.out.println("Type 3 - Deposit");
-                    System.out.println("Type 4 - Exit");
-                    System.out.print("Choice:");
-                    byte userOptionChoice = scanner.nextByte();
-                    switch (userOptionChoice) {
-                        case 1:
-                            System.out.println("Account balance: " +  NumberFormat.getCurrencyInstance().format(checkingBallance));
-                            
-                            break;
-                        case 2:
-                            while(true){
-                                if(checkingBallance == 0){
-                                    System.out.println("------------------------------------------");
-                                    System.out.println("Empty account. Make a deposit.");
-                                    System.out.println("------------------------------------------");
-                                    break;
-                                }
-                                System.out.print("Enter amount to withdraw:");
-                                int amountToWithdraw = scanner.nextInt();
-                                if ( checkingBallance - amountToWithdraw >= 0){
-                                    checkingBallance -= amountToWithdraw;
-                                    System.out.println("Account balance: " + NumberFormat.getCurrencyInstance().format(checkingBallance));
-                                    break;
-                                }
-                                System.out.println("You dont have the funds to perform the operation.");
-                            }
-                            break;
-                        case 3:
-                        while(true){
-                            System.out.print("Enter amount to deposit:");
-                            int amountToDeposit = scanner.nextInt();
-                            if ( amountToDeposit > 0){
-                                checkingBallance += amountToDeposit;
-                                System.out.println("Account balance: " +  NumberFormat.getCurrencyInstance().format(checkingBallance));
+                    while(true) {
+                        try {
+                            byte userOptionChoice1 = selectAccountOptions(scanner, "CHECKING");
+                            checkingBalance = runAccountChoice( scanner,  userOptionChoice1, checkingBalance);
+                            if(userOptionChoice1 == 4) {
                                 break;
                             }
-                            System.out.println("------------------------------------------");
-                            System.out.println("Invalid amount.");
-                            System.out.println("------------------------------------------");
+                        } catch (Exception e) {
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                            System.out.println("Invalid input. Please enter valid number.");
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                            // Clear scanner buffer
+                            scanner.nextLine();
                         }
-                            break;
-                        case 4:
-                            break;
-                        default:
-                            System.out.println("------------------------------------------");
-                            System.out.println("Invalid choice. Type a number between (1-4)");
-                            System.out.println("------------------------------------------");
+                       
                     }
                     break;
                 case 2:
-                break;
+                    while(true) {
+                        try {
+                            byte userOptionChoice2 = selectAccountOptions(scanner, "SAVINGS");
+                            savingsBalance = runAccountChoice( scanner,  userOptionChoice2, savingsBalance);
+                            if(userOptionChoice2 == 4) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                            System.out.println("Invalid input. Please enter valid number.");
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                            // Clear scanner buffer
+                            scanner.nextLine();
+                        }
+                    }
+                    break;
                 case 3:
-                break;
+                    break;
     
                 default:
                     System.out.println("------------------------------------------");
@@ -84,56 +63,122 @@ public class App {
                 break;
             }
         }
-
-        
-
-        
-
-
-        
-
-        
-        
     }
 
     static void verifyUser(Scanner scanner) {
         final int accountNumber = 851207;
         final int accountPin = 1234;
-        while(true) {
-
-            System.out.print("Please enter your account number:");
-            int userAccountNumber = scanner.nextInt();
-    
-            System.out.print("Please enter your pin number:");
-            int userPinNumber = scanner.nextInt();
-    
-            if(accountNumber == userAccountNumber && userPinNumber == accountPin){
-                break;
+        while (true) {
+            try {
+                System.out.print("Please enter your account number:");
+                int userAccountNumber = scanner.nextInt();
+                System.out.print("Please enter your pin number:");
+                int userPinNumber = scanner.nextInt();
+                if (accountNumber == userAccountNumber && userPinNumber == accountPin) {
+                    break;
+                }
+                System.out.println("------------------------------------------");
+                System.out.println("Wrong account number or pin number.");
+                System.out.println("------------------------------------------");
+            } catch (Exception e) {
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                System.out.println("Invalid input. Please enter valid numbers.");
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                // Clear scanner buffer
+                scanner.nextLine();
             }
-
-            System.out.println("Wrong account number or pin number.");
-
         }
-        
     }
 
     static byte selectAccount(Scanner scanner) {
-        
         while(true) {
-            System.out.println("------------ SELECT ACCOUNT --------------");
-            System.out.println("Please select account you want to access:");
-            System.out.println("Type 1 - Checking account");
-            System.out.println("Type 2 - Savings account");
-            System.out.println("Type 3 - Exit");
-            System.out.print("Choice:");
-            byte userAccountChoice = scanner.nextByte();
-            if(userAccountChoice > 0 && userAccountChoice < 4){
-                return userAccountChoice;
+            try {
+                System.out.println("------------ SELECT ACCOUNT --------------");
+                System.out.println("Please select account you want to access:");
+                System.out.println("Type 1 - Checking account");
+                System.out.println("Type 2 - Savings account");
+                System.out.println("Type 3 - Exit");
+                System.out.print("Choice:");
+                byte userAccountChoice = scanner.nextByte();
+                if(userAccountChoice > 0 && userAccountChoice < 4){
+                    return userAccountChoice;
+                }
+                System.out.println("------------------------------------------");
+                System.out.println("Invalid choice. Type a number between (1-3)");
+                System.out.println("------------------------------------------");
+                
+            } catch (Exception e) {
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                System.out.println("Invalid input. Please enter valid number.");
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                // Clear scanner buffer
+                scanner.nextLine();
             }
-            System.out.println("------------------------------------------");
-            System.out.println("Invalid choice. Type a number between (1-3)");
-            System.out.println("------------------------------------------");
         }
+    }
+
+    static byte selectAccountOptions(Scanner scanner, String accountName) {
+        while(true) {
+            
+            System.out.println("------------ " + accountName + " ACCOUNT --------------");
+            System.out.println("Type 1 - View balance");
+            System.out.println("Type 2 - Withdraw");
+            System.out.println("Type 3 - Deposit");
+            System.out.println("Type 4 - Exit");
+            System.out.print("Choice:");
+            byte userOptionChoice = scanner.nextByte();
+            return userOptionChoice;
+                
+        }
+    }
+
+    static double runAccountChoice(Scanner scanner, byte userOptionChoice, double balance){
         
+        switch (userOptionChoice) {
+            case 1:
+                System.out.println("Account balance: " +  NumberFormat.getCurrencyInstance().format(balance));
+                
+                break;
+            case 2:
+                while(true){
+                    if(balance == 0){
+                        System.out.println("------------------------------------------");
+                        System.out.println("Empty account. Make a deposit.");
+                        System.out.println("------------------------------------------");
+                        break;
+                    }
+                    
+                    System.out.print("Enter amount to withdraw:");
+                    int amountToWithdraw = scanner.nextInt();
+                    if ( balance - amountToWithdraw >= 0){
+                        balance -= amountToWithdraw;
+                        System.out.println("Account balance: " + NumberFormat.getCurrencyInstance().format(balance));
+                        break;
+                    }
+                    System.out.println("You dont have the funds to perform the operation.");
+                }
+                break;
+            case 3:
+                while(true){
+                    System.out.print("Enter amount to deposit:");
+                    int amountToDeposit = scanner.nextInt();
+                    if ( amountToDeposit > 0){
+                        balance += amountToDeposit;
+                        System.out.println("Account balance: " +  NumberFormat.getCurrencyInstance().format(balance));
+                        break;
+                    }
+                    System.out.println("------------------------------------------");
+                    System.out.println("Invalid amount.");
+                    System.out.println("------------------------------------------");
+                }
+                break;
+            case 4:
+                break;
+            default:
+                System.out.println("------------------------------------------");
+                System.out.println("Invalid choice. Type a number between (1-4)");
+                System.out.println("------------------------------------------");
+        }
+        return balance;
     }
 }
