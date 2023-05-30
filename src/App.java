@@ -6,7 +6,7 @@ public class App {
         
         double checkingBalance = 0;
         double savingsBalance = 0;
-        
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("--------- Wellcome -----------");
         verifyUser(scanner);
@@ -39,7 +39,7 @@ public class App {
     }
 
     static void verifyUser(Scanner scanner) {
-        final int accountNumber = 851207;
+        final int accountNumber = 123456;
         final int accountPin = 1234;
         while (true) {
             try {
