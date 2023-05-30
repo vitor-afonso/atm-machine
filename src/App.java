@@ -4,11 +4,12 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("--------- Wellcome to VKM Bank -----------");
-        verifyUser(scanner);
         double checkingBalance = 0;
         double savingsBalance = 0;
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("--------- Wellcome -----------");
+        verifyUser(scanner);
         
         while (true) {
             // select account until exit choice
@@ -16,41 +17,13 @@ public class App {
             
             switch(userAccountChoice) {
                 case 1:
-                    while(true) {
-                        try {
-                            byte userOptionChoice1 = selectAccountOptions(scanner, "CHECKING");
-                            checkingBalance = runAccountChoice( scanner,  userOptionChoice1, checkingBalance);
-                            if(userOptionChoice1 == 4) {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                            System.out.println("Invalid input. Please enter valid number.");
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                            // Clear scanner buffer
-                            scanner.nextLine();
-                        }
-                       
-                    }
+                    checkingBalance = getChosenAccount(scanner, checkingBalance, "CHECKING");
                     break;
                 case 2:
-                    while(true) {
-                        try {
-                            byte userOptionChoice2 = selectAccountOptions(scanner, "SAVINGS");
-                            savingsBalance = runAccountChoice( scanner,  userOptionChoice2, savingsBalance);
-                            if(userOptionChoice2 == 4) {
-                                break;
-                            }
-                        } catch (Exception e) {
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                            System.out.println("Invalid input. Please enter valid number.");
-                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-                            // Clear scanner buffer
-                            scanner.nextLine();
-                        }
-                    }
+                    savingsBalance = getChosenAccount(scanner, savingsBalance, "SAVINGS");
                     break;
                 case 3:
+                    System.out.println("Thank you for using this ATM, bye.");
                     break;
     
                 default:
@@ -111,6 +84,24 @@ public class App {
                 System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                 System.out.println("Invalid input. Please enter valid number.");
                 System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                // Clear scanner buffer
+                scanner.nextLine();
+            }
+        }
+    }
+
+    static double getChosenAccount(Scanner scanner, double accountBalance, String accountName) {
+        while(true) {
+            try {
+                byte selectedAccountOption = selectAccountOptions(scanner, accountName);
+                accountBalance = runAccountChoice( scanner, selectedAccountOption, accountBalance);
+                if(selectedAccountOption == 4) {
+                    return accountBalance;
+                }
+            } catch (Exception e) {
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                System.out.println("Invalid input. Please enter valid number.");
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                 // Clear scanner buffer
                 scanner.nextLine();
             }
