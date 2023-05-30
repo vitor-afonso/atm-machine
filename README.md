@@ -30,6 +30,7 @@ To use this repository effectively, follow these steps:
 - Clone this repository to your local machine using Git or download it as a ZIP file and extract its contents.
 - Open your preferred Java IDE and import the project.
 - Navigate to `src` folder branch and explore the provided code.
+- Once you run the App you can use the account number: 123456 and pin: 1234.
 
 Feel free to modify or expand upon the code examples to explore different scenarios and enhance your learning experience.
 
